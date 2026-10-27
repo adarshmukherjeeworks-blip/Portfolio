@@ -76,3 +76,33 @@
     x0 = null;
   });
 })();
+
+// Motion & video: muted clips play while on screen; click opens with sound and controls.
+(() => {
+  const clips = [...document.querySelectorAll('video.clip')];
+  if (!clips.length) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => { en.isIntersecting ? en.target.play().catch(() => {}) : en.target.pause(); });
+    }, { threshold: 0.35 });
+    clips.forEach(v => io.observe(v));
+  }
+  const box = document.querySelector('.player');
+  if (!box || typeof box.showModal !== 'function') return;
+  const full = box.querySelector('video');
+  document.querySelectorAll('.clip-open').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const v = btn.querySelector('video.clip');
+      full.src = v.dataset.full || v.currentSrc;
+      full.poster = v.poster;
+      box.querySelector('figcaption').textContent = btn.dataset.caption || '';
+      box.showModal();
+      full.play().catch(() => {});
+    });
+  });
+  const close = () => box.close();
+  box.querySelector('.lb-close').addEventListener('click', close);
+  box.addEventListener('click', e => { if (e.target === box) close(); });
+  box.addEventListener('close', () => { full.pause(); full.removeAttribute('src'); full.load(); });
+})();
