@@ -243,3 +243,4 @@ section{position:relative}
   .hero .eyebrow{margin-top:0}
 }
 .hero-body{margin-bottom:28px}
+@media (max-width:760px){.reg{display:none}}
