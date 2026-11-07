@@ -42,14 +42,14 @@
   --tosh-1: #c77f3f; --tosh-2: #9c514f; --tosh-3: #ae9a63; --tosh-4: #381e0f;
   --hoc-1: #fbbdc1; --hoc-2: #462520; --hoc-3: #ffe9ca; --hoc-4: #d7998d; --hoc-5: #ff5f71;
   --hrv-1: #f88f65; --hrv-2: #f4dcd5; --hrv-3: #97674c; --hrv-4: #0f0b0a;
-  --angz-1: #085493; --angz-2: #763c51; --angz-3: #ebf1f6; --angz-4: #050807;
+  --lux-1: #293b32; --lux-2: #e6e2d2;
 }
 
 /* Declared theme blocks: each case borrows one tint from its own palette for its ground */
 [data-case="tosh"] { --case: var(--tosh-1); --case-ground: color-mix(in oklab, var(--tosh-1) 12%, var(--color-paper)); }
 [data-case="hoc"]  { --case: var(--hoc-5);  --case-ground: color-mix(in oklab, var(--hoc-1) 22%, var(--color-paper)); }
 [data-case="hrv"]  { --case: var(--hrv-1);  --case-ground: var(--color-paper); }
-[data-case="angz"] { --case: var(--angz-1); --case-ground: var(--color-band); }
+[data-case="lux"]  { --case: var(--lux-2); --case-ground: var(--lux-1); --color-on-ink: var(--lux-2); --color-on-ink-2: color-mix(in oklab, var(--lux-2) 72%, var(--lux-1)); }
 
 /* Dark mode: the proof at night. Follows the system unless the toggle has picked a side. */
 @media (prefers-color-scheme: dark) {

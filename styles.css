@@ -5,7 +5,7 @@
 /* Hallmark · waive 26b · no form and no disabled control on this portfolio · every control on the page is a link, a viewer button or the marquee pause, none of which can be disabled */
 /* Hallmark · waive 28b · the dialog player is empty until a reel is chosen · script copies the chosen reel's own poster frame into the player when it opens */
 /* Hallmark · dismissed 11 · the work zooms 1.03 inside a fixed crop-marked frame · the hover rule of design-taste-frontend, applied alongside Hallmark at the user's request */
-/* Hallmark · dismissed 58 · four real client cases on one portfolio page · every line describes delivered work for TÔSH, House of Cakes, HRV and ANGZ */
+/* Hallmark · dismissed 58 · four real client cases on one portfolio page · every line describes delivered work for TÔSH, House of Cakes, HRV and Luxora */
 /* Hallmark · dismissed 3 · the play mark inside each reel tag is a drawn CSS triangle · it is not a side stripe on a card */
 /* Hallmark · waive 39b · each reel and the CPHI film is one large play button the size of its frame · the whole poster is the target, so it stands at the video's height, not a control's */
 /* Hallmark · dismissed 49 · the reel tag sets white-space nowrap and clips inside its frame · the label stays on one line at every width */
@@ -190,6 +190,10 @@ h3 { font-size: var(--text-title); letter-spacing: -0.015em; }
 .zoom:focus-visible, .clip-open:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
 
 .labels { display: grid; gap: var(--space-lg); }
+/* a row of pictures sharing one height, each as wide as its own ratio */
+.fit { display: flex; gap: var(--space-lg); align-items: flex-start; }
+.fit > .print { flex-basis: 0; min-width: 0; }
+.spreads + .fit { margin-top: var(--space-xl); }
 .reels { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-lg); }
 .reel { margin: 0; }
 .reel .clip-open { cursor: pointer; border-radius: 26px; border: 7px solid var(--color-band); background: var(--color-band); box-shadow: var(--shadow-sheet); }
@@ -225,20 +229,20 @@ h3 { font-size: var(--text-title); letter-spacing: -0.015em; }
 .brief-solved { background: var(--color-paper-hi); box-shadow: var(--shadow-sticker); border-color: var(--color-ink); }
 .brief-solved dt { background: var(--color-accent); color: var(--color-accent-ink); border-color: var(--color-accent-ink); }
 .brief dd { margin: 0; font-size: var(--text-lead); line-height: 1.4; color: var(--color-ink); max-width: 48ch; text-wrap: pretty; }
-[data-case="angz"] .brief-col { border-color: color-mix(in oklab, var(--color-on-ink) 22%, transparent); background: color-mix(in oklab, var(--color-on-ink) 5%, var(--color-band)); }
-[data-case="angz"] .brief dd { color: var(--color-on-ink); }
-[data-case="angz"] .brief dt { border-color: var(--color-on-ink); }
-[data-case="angz"] .brief-solved { box-shadow: 3px 4px 0 var(--angz-1); border-color: var(--color-on-ink); }
+[data-case="lux"] .brief-col { border-color: color-mix(in oklab, var(--color-on-ink) 22%, transparent); background: color-mix(in oklab, var(--color-on-ink) 6%, var(--lux-1)); }
+[data-case="lux"] .brief dd { color: var(--color-on-ink); }
+[data-case="lux"] .brief dt { border-color: var(--color-on-ink); }
+[data-case="lux"] .brief-solved { box-shadow: 3px 4px 0 var(--color-shade); border-color: var(--color-on-ink); }
 
 /* dark case */
-[data-case="angz"] { color: var(--color-on-ink); --color-mark: color-mix(in oklab, var(--color-on-ink) 70%, transparent); }
-[data-case="angz"] .case-head { border-color: var(--color-on-ink-2); }
-[data-case="angz"] .case-line, [data-case="angz"] .part-head p { color: var(--color-on-ink-2); }
-[data-case="angz"] .case-sector, [data-case="angz"] .part-n { color: var(--color-on-ink-2); }
-[data-case="angz"] .case-n { color: var(--angz-3); }
-[data-case="angz"] .part { border-color: color-mix(in oklab, var(--color-on-ink) 18%, transparent); }
-[data-case="angz"] .tags li { color: var(--color-on-ink); background: var(--color-band); border-color: var(--color-on-ink); box-shadow: 2px 2px 0 var(--angz-1); }
-[data-case="angz"] .zoom { background: color-mix(in oklab, var(--color-on-ink) 10%, var(--color-band)); }
+[data-case="lux"] { color: var(--color-on-ink); --color-mark: color-mix(in oklab, var(--color-on-ink) 70%, transparent); }
+[data-case="lux"] .case-head { border-color: var(--color-on-ink-2); }
+[data-case="lux"] .case-line, [data-case="lux"] .part-head p { color: var(--color-on-ink-2); }
+[data-case="lux"] .case-sector, [data-case="lux"] .part-n { color: var(--color-on-ink-2); }
+[data-case="lux"] .case-n { color: var(--lux-2); }
+[data-case="lux"] .part { border-color: color-mix(in oklab, var(--color-on-ink) 18%, transparent); }
+[data-case="lux"] .tags li { color: var(--color-on-ink); background: color-mix(in oklab, var(--lux-1) 70%, var(--color-shade)); border-color: var(--color-on-ink); box-shadow: 2px 2px 0 var(--color-shade); }
+[data-case="lux"] .zoom { background: color-mix(in oklab, var(--color-on-ink) 8%, var(--lux-1)); }
 
 /* ---------- about ---------- */
 .about { padding-block: var(--section-gap); }
@@ -349,6 +353,8 @@ h3 { font-size: var(--text-title); letter-spacing: -0.015em; }
   .actions { width: 100%; }
   .actions .btn { flex: 1 1 100%; }
   .spreads, .pair, .pair-id, .caps, .book { grid-template-columns: minmax(0, 1fr); }
+  .fit { flex-direction: column; gap: var(--space-xl); }
+  .fit > .print { width: 100%; flex-basis: auto; }
   .caps li:nth-child(even) { padding-left: 0; border-left: 0; }
   .covers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .case-head { grid-template-columns: minmax(0, 1fr); gap: var(--space-md); }
