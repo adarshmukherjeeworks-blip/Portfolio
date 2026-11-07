@@ -70,7 +70,7 @@
     toggle.addEventListener('click', () => {
       const next = isDark() ? 'light' : 'dark';
       if (reduce) { apply(next); return; }
-      // A ripple: rings run out from the switch, the first riding the edge of the new theme
+      // A ripple: a single ring leads the new theme out from the switch
       const r = toggle.getBoundingClientRect();
       const x = r.left + r.width / 2, y = r.top + r.height / 2;
       const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
@@ -79,15 +79,13 @@
       ripple.setAttribute('class', 'ripple');
       ripple.setAttribute('aria-hidden', 'true');
       ripple.setAttribute('viewBox', `0 0 ${innerWidth} ${innerHeight}`);
-      [0, 140, 280, 420].forEach((delay, i) => {
-        const c = document.createElementNS(NS, 'circle');
-        c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', end);
-        c.setAttribute('class', `ripple-ring ripple-ring-${i}`);
-        c.style.animationDelay = `${delay}ms`;
-        ripple.appendChild(c);
-      });
+      // one ring, running just ahead of the edge of the new theme
+      const c = document.createElementNS(NS, 'circle');
+      c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', end + 48);
+      c.setAttribute('class', 'ripple-ring');
+      ripple.appendChild(c);
       document.body.appendChild(ripple);
-      setTimeout(() => ripple.remove(), 1700);
+      setTimeout(() => ripple.remove(), 1300);
 
       // The new theme spreads out from the switch like ink, over the old page
       if (document.startViewTransition) {
