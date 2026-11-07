@@ -62,11 +62,32 @@
     if (themeMeta) themeMeta.setAttribute('content', getComputedStyle(document.body).backgroundColor);
   };
   if (toggle) {
-    toggle.addEventListener('click', () => {
-      const next = isDark() ? 'light' : 'dark';
+    const apply = next => {
       root.dataset.theme = next;
       try { localStorage.setItem('theme', next); } catch (e) {}
       sync();
+    };
+    toggle.addEventListener('click', () => {
+      const next = isDark() ? 'light' : 'dark';
+      if (reduce) { apply(next); return; }
+      // The new theme spreads out from the switch like ink, over the old page
+      if (document.startViewTransition) {
+        const r = toggle.getBoundingClientRect();
+        const x = r.left + r.width / 2, y = r.top + r.height / 2;
+        const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+        const vt = document.startViewTransition(() => apply(next));
+        vt.ready.then(() => {
+          root.animate(
+            { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+            { duration: 900, easing: 'cubic-bezier(0.65, 0, 0.35, 1)', pseudoElement: '::view-transition-new(root)' }
+          );
+        }).catch(() => {});
+        return;
+      }
+      // Browsers without view transitions: colours fade across instead of snapping
+      root.classList.add('theme-fading');
+      apply(next);
+      setTimeout(() => root.classList.remove('theme-fading'), 650);
     });
     sysDark.addEventListener('change', sync);
     sync();
