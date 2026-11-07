@@ -70,21 +70,39 @@
     toggle.addEventListener('click', () => {
       const next = isDark() ? 'light' : 'dark';
       if (reduce) { apply(next); return; }
+      // A ripple: rings run out from the switch, the first riding the edge of the new theme
+      const r = toggle.getBoundingClientRect();
+      const x = r.left + r.width / 2, y = r.top + r.height / 2;
+      const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      const NS = 'http://www.w3.org/2000/svg';
+      const ripple = document.createElementNS(NS, 'svg');
+      ripple.setAttribute('class', 'ripple');
+      ripple.setAttribute('aria-hidden', 'true');
+      ripple.setAttribute('viewBox', `0 0 ${innerWidth} ${innerHeight}`);
+      [0, 140, 280, 420].forEach((delay, i) => {
+        const c = document.createElementNS(NS, 'circle');
+        c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', end);
+        c.setAttribute('class', `ripple-ring ripple-ring-${i}`);
+        c.style.animationDelay = `${delay}ms`;
+        ripple.appendChild(c);
+      });
+      document.body.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 1700);
+
       // The new theme spreads out from the switch like ink, over the old page
       if (document.startViewTransition) {
-        const r = toggle.getBoundingClientRect();
-        const x = r.left + r.width / 2, y = r.top + r.height / 2;
-        const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
         const vt = document.startViewTransition(() => apply(next));
         vt.ready.then(() => {
+          ripple.classList.add('is-go');
           root.animate(
             { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
             { duration: 900, easing: 'cubic-bezier(0.65, 0, 0.35, 1)', pseudoElement: '::view-transition-new(root)' }
           );
-        }).catch(() => {});
+        }).catch(() => ripple.classList.add('is-go'));
         return;
       }
       // Browsers without view transitions: colours fade across instead of snapping
+      ripple.classList.add('is-go');
       root.classList.add('theme-fading');
       apply(next);
       setTimeout(() => root.classList.remove('theme-fading'), 650);
