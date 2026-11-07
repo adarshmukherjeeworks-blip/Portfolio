@@ -1,0 +1,51 @@
+/* Tokens: Studio proof paper (Hallmark), Bricolage Grotesque over Instrument Serif, one cadmium-orange signal.
+   Case palettes are sampled from each client's own artwork. */
+@font-face { font-family: "Bricolage Grotesque"; src: url("assets/fonts/bricolage-latin.woff2") format("woff2"); font-weight: 200 800; font-stretch: 75% 100%; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Bricolage Grotesque"; src: url("assets/fonts/bricolage-latin-ext.woff2") format("woff2"); font-weight: 200 800; font-stretch: 75% 100%; font-display: swap; unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C4, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-italic-latin.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+
+:root {
+  color-scheme: light;
+  --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-xs: 0.8125rem; --text-sm: 0.875rem; --text-md: 1.0625rem; --text-lg: 1.25rem; --text-xl: 1.5625rem; --text-2xl: 1.953rem; --text-3xl: 2.441rem;
+  --text-display-s: clamp(2.25rem, 4vw + 0.5rem, 3.75rem); --text-display: clamp(2.75rem, 5vw + 1rem, 5.25rem);
+  --text-name: clamp(3.4rem, 12.4vw, 12.75rem);
+  --text-giant: clamp(3.5rem, 12vw, 13rem);
+  --text-section: clamp(2.25rem, 3.4vw + 1rem, 4.5rem); --text-title: clamp(1.375rem, 0.75vw + 1rem, 1.75rem); --text-lead: clamp(1.125rem, 0.45vw + 1rem, 1.5rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); --ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-micro: 120ms; --dur-short: 220ms; --dur-long: 420ms; --dur-enter: 900ms;
+  --color-error: oklch(52% 0.19 27); --color-success: oklch(50% 0.12 150);
+  --container: 1440px; --gutter: 64px; --gap-columns: 32px; --section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300; --z-modal: 400; --z-toast: 500; --z-tooltip: 600;
+
+  --color-paper: oklch(97.2% 0.006 215); --color-paper-2: oklch(94% 0.009 215); --color-paper-3: oklch(90.5% 0.011 215); --color-paper-hi: oklch(99.4% 0.003 215);
+  --color-ink: oklch(16% 0.032 250); --color-ink-2: oklch(34% 0.022 245); --color-muted: oklch(47% 0.018 240);
+  --color-rule: oklch(84% 0.010 225);
+  --color-accent: oklch(68% 0.172 50); --color-accent-ink: oklch(16% 0.032 250); --color-focus: oklch(52% 0.15 48);
+  --color-on-ink: oklch(97.2% 0.006 215); --color-on-ink-2: oklch(80% 0.012 230);
+  --color-dot: color-mix(in oklab, var(--color-ink) 20%, transparent); --color-mark: color-mix(in oklab, var(--color-ink) 72%, transparent);
+  --color-scrim: color-mix(in oklab, var(--color-ink) 92%, transparent);
+  --color-sticker: oklch(99.4% 0.003 215);
+
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-outlier: "Instrument Serif", ui-serif, Georgia, serif;
+  --radius-card: 3px; --radius-pill: 999px; --radius-sticker: 14px; --rule-hair: 1px;
+  --shadow-card: none;
+  --shadow-sheet: 1px 2px 0 color-mix(in oklab, var(--color-ink) 7%, transparent), 10px 18px 36px -14px color-mix(in oklab, var(--color-ink) 32%, transparent);
+  --shadow-sticker: 3px 4px 0 var(--color-ink);
+  --tracking-display: -0.035em; --display-weight: 800;
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+
+  /* Case palettes, sampled from the client artwork */
+  --tosh-1: #c77f3f; --tosh-2: #9c514f; --tosh-3: #ae9a63; --tosh-4: #381e0f;
+  --hoc-1: #fbbdc1; --hoc-2: #462520; --hoc-3: #ffe9ca; --hoc-4: #d7998d;
+  --hrv-1: #f88f65; --hrv-2: #f4dcd5; --hrv-3: #97674c; --hrv-4: #0f0b0a;
+  --angz-1: #085493; --angz-2: #763c51; --angz-3: #ebf1f6; --angz-4: #050807;
+}
+
+/* Declared theme blocks: each case borrows one tint from its own palette for its ground */
+[data-case="tosh"] { --case: var(--tosh-1); --case-ground: color-mix(in oklab, var(--tosh-1) 12%, var(--color-paper)); }
+[data-case="hoc"]  { --case: var(--hoc-2);  --case-ground: color-mix(in oklab, var(--hoc-1) 22%, var(--color-paper)); }
+[data-case="hrv"]  { --case: var(--hrv-1);  --case-ground: var(--color-paper); }
+[data-case="angz"] { --case: var(--angz-1); --case-ground: var(--color-ink); }
