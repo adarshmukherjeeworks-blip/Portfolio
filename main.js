@@ -49,6 +49,29 @@
     hero.addEventListener('pointerleave', () => { active = false; kick(); });
   }
 
+  /* Dark mode switch: follows the system until the visitor picks, then remembers the pick */
+  const root = document.documentElement;
+  const toggle = document.querySelector('[data-theme-toggle]');
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  const sysDark = matchMedia('(prefers-color-scheme: dark)');
+  const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : sysDark.matches;
+  const sync = () => {
+    const dark = isDark();
+    toggle.setAttribute('aria-pressed', String(dark));
+    toggle.querySelector('.tt-label').textContent = dark ? 'Light' : 'Dark';
+    if (themeMeta) themeMeta.setAttribute('content', getComputedStyle(document.body).backgroundColor);
+  };
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const next = isDark() ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      sync();
+    });
+    sysDark.addEventListener('change', sync);
+    sync();
+  }
+
   /* Marquee pause control */
   document.querySelectorAll('[data-mq]').forEach(mq => {
     const btn = mq.querySelector('[data-mq-toggle]');
